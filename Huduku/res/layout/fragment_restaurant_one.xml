@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+	
+    <TextView
+        android:id="@+id/textViewRestaurantOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/title_fragment_review_one"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@dimen/fragment_heading_dim"
+        android:background="@android:color/holo_green_light" />
+
+    <TextView
+        android:id="@+id/textViewRatingsRestaurant1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewRestaurantOne"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/title_text_view_restaurant1_ratings"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_green_light" />
+
+    <ExpandableListView
+        android:id="@+id/expandableListView1"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewRatingsRestaurant1" >
+    </ExpandableListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@android:color/holo_green_light" >
+
+        <ImageView
+            android:id="@+id/imageViewDeals1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/deals_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewPin1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/pin_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewWeb1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/web_icon" />
+    </LinearLayout>
+
+</RelativeLayout>

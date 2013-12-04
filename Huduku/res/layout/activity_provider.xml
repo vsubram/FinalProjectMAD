@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProviderActivity" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentTop="true" >
+
+        <fragment
+            android:id="@+id/fragmentRestaurant1"
+            android:name="edu.uncc.mad.huduku.RestaurantOneFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="230dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" >
+        
+        <fragment
+            android:id="@+id/fragmentRestaurant2"
+            android:name="edu.uncc.mad.huduku.RestaurantTwoFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="230dp" />
+    </RelativeLayout>
+
+</RelativeLayout>
