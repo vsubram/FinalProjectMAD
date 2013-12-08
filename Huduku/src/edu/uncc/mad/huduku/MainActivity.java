@@ -3,12 +3,15 @@ package edu.uncc.mad.huduku;
 import java.util.ArrayList;
 import java.util.Set;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,53 +33,68 @@ public class MainActivity extends Activity {
 
 	private ListView listViewReviews;
 	private GuiArrayAdapter guiArrayAdapter;
-	
+	private GoogleMap gMap;
+	private MapFragment mapFrag;
+	private LocationManager locManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
+		/**
+		 * Setting GoogleMap on home screen
+		 */
+
+		mapFrag = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+		gMap = mapFrag.getMap();
+		gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+		gMap.setMyLocationEnabled(true);
+
+		locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		Location l = locManager
+				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+		gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+				new LatLng(l.getLatitude(), l.getLongitude()), 17));
+
 		/**
 		 * Initialize Location Manager.
 		 */
-		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationHelper.setLocationManager(lm);
-		
+
 		/**
 		 * Initialize Geo Coder
 		 */
 		GeoCodeHelper.initializeGeoCodeHelper(getApplicationContext());
-		
+
 		/**
 		 * List View Initializations
 		 */
 		listViewReviews = (ListView) findViewById(R.id.listViewReviews);
-		
+
 		/**
 		 * 
 		 * Creating a list view adapter
 		 */
-//		listViewAdapter = new ArrayAdapter<String>(getBaseContext(),
-//				android.R.layout.simple_list_item_1, android.R.id.text1,
-//				ListViewUtils.getListItems());
-		
+
 		ArrayList<ImageView> logos = new ArrayList<ImageView>();
-		
-			ImageView iv = new ImageView(getApplicationContext());
-			iv.setImageResource(R.drawable.yelp_logo);
-			logos.add(0, iv);
-			
-			ImageView iv1 = new ImageView(getApplicationContext());
-			iv1.setImageResource(R.drawable.citygrid_logo);
-			logos.add(0, iv1);
-			
-			ImageView iv2 = new ImageView(getApplicationContext());
-			iv2.setImageResource(R.drawable.google_places_logo);
-			logos.add(0, iv2);
-			
-		
+
+		ImageView iv = new ImageView(getApplicationContext());
+		iv.setImageResource(R.drawable.yelp_logo);
+		logos.add(0, iv);
+
+		ImageView iv1 = new ImageView(getApplicationContext());
+		iv1.setImageResource(R.drawable.citygrid_logo);
+		logos.add(0, iv1);
+
+		ImageView iv2 = new ImageView(getApplicationContext());
+		iv2.setImageResource(R.drawable.google_places_logo);
+		logos.add(0, iv2);
+
 		guiArrayAdapter = new GuiArrayAdapter(this, logos);
-		
 
 		// setting values for the newly created list view
 		listViewReviews.setAdapter(guiArrayAdapter);
@@ -126,12 +144,6 @@ public class MainActivity extends Activity {
 		 * USAGE: SharedPreferenceManager manager =
 		 * SharedPreferenceManager.getSharedPreferenceManager();
 		 */
-
-		// gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-		// currentLocation[0], currentLocation[1]), 10.0f));
-		// onLocationChanged(35.231006,-80.839666);
-		// onLocationChanged(35.22569,-80.838336);
-
 	}
 
 	@Override
@@ -140,34 +152,39 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	        case R.id.pinnedPlacesMenuItem:
-	        	//TODO Invoke the new activity here. 
-	        	Log.d("huduku", "Pinned Places");
-	        	
-	        	if(SharedPreferenceManager.getSharedPreferenceManager().getPinnedPlacesCount() == 0){ 
-	        		Toast.makeText(getApplicationContext(), "No Places Pinned yet", Toast.LENGTH_LONG).show();
-	        		return true;
-	        	}
-	        	
-	        	startActivity(new Intent(getApplicationContext(), PinnedPlacesActivity.class));
-	            return true;
-	            
-	        case R.id.deletePinnedItemsItem:
-	        	Set<String> pinnedPlacesNames = SharedPreferenceManager.getSharedPreferenceManager().getPinnedPlacesNames();
-	        	
-	        	if(pinnedPlacesNames == null)
-	        		return true;
-	        	
-	        	for(String s : pinnedPlacesNames)
-	        		SharedPreferenceManager.getSharedPreferenceManager().deletePinnedPlace(s);
-	            
-	        default:
-	        	return super.onOptionsItemSelected(item);
-	    }
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.pinnedPlacesMenuItem:
+			
+			Log.d("huduku", "Pinned Places");
+
+			if (SharedPreferenceManager.getSharedPreferenceManager()
+					.getPinnedPlacesCount() == 0) {
+				Toast.makeText(getApplicationContext(), "No Places Pinned yet",
+						Toast.LENGTH_LONG).show();
+				return true;
+			}
+
+			startActivity(new Intent(getApplicationContext(),
+					PinnedPlacesActivity.class));
+			return true;
+
+		case R.id.deletePinnedItemsItem:
+			Set<String> pinnedPlacesNames = SharedPreferenceManager
+					.getSharedPreferenceManager().getPinnedPlacesNames();
+
+			if (pinnedPlacesNames == null)
+				return true;
+
+			for (String s : pinnedPlacesNames)
+				SharedPreferenceManager.getSharedPreferenceManager()
+						.deletePinnedPlace(s);
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }

@@ -69,6 +69,7 @@ public class ProviderActivity extends Activity implements LocationChangeObserver
 		 * Initialize the location handler. This must be done in all the
 		 * location
 		 */
+		
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationHelper.setLocationManager(locationManager);
 		LocationHelper.registerLocationObserver(this);
@@ -134,8 +135,6 @@ public class ProviderActivity extends Activity implements LocationChangeObserver
 		 * implement the LocationObservable interface. That will then be called
 		 * whenever there is a location change.
 		 */
-		// double[] currentLocation = locationObservable.getCurrentLocation();
-		// onLocationChanged(currentLocation[0], currentLocation[1]);
 	}
 
 	@Override

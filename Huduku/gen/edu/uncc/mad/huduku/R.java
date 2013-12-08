@@ -231,7 +231,6 @@ containing a value of this type.
         public static final int fragment_settings=0x7f05001e;
         public static final int headerTextView=0x7f05001b;
         public static final int hybrid=0x7f050004;
-        public static final int imageView1=0x7f050007;
         public static final int imageViewDeals1=0x7f050012;
         public static final int imageViewDeals2=0x7f050018;
         public static final int imageViewLogos=0x7f05001c;
@@ -241,6 +240,7 @@ containing a value of this type.
         public static final int imageViewWeb2=0x7f05001a;
         public static final int listViewDeals=0x7f050005;
         public static final int listViewReviews=0x7f050006;
+        public static final int map=0x7f050007;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int pinnedPlacesListView=0x7f050008;
